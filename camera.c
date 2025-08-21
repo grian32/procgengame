@@ -9,13 +9,14 @@ void PUpdateCamera(Camera *camera) {
     float yawAngle = -mouse.x * SENSITIVITY;
     float pitchAngle = -mouse.y * SENSITIVITY;
 
-    Vector3 up = camera->up;
+    Vector3 up = Vector3Normalize(camera->up);
 
     Vector3 targetPos = Vector3Subtract(camera->target, camera->position);
+    Vector3 forward = Vector3Normalize(targetPos);
 
     targetPos = Vector3RotateByAxisAngle(targetPos, up, yawAngle);
 
-    Vector3 right = Vector3CrossProduct(targetPos, up);
+    Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, up));
 
     targetPos = Vector3RotateByAxisAngle(targetPos, right, pitchAngle);
     camera -> target = Vector3Add(camera->position, targetPos);
