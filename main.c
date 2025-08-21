@@ -1,9 +1,7 @@
 #include <raylib.h>
 #include <raymath.h>
-#include <stdio.h>
 
 const float SENSITIVITY = 0.003f;
-
 
 void UpdateCameraG(Camera *camera) {
     Vector2 mouse = GetMouseDelta();
