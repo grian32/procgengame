@@ -5,7 +5,9 @@ set(CMAKE_C_STANDARD 11)
 
 find_package(raylib REQUIRED)
 
-add_executable(proc_gen_game main.c)
+add_executable(proc_gen_game main.c
+        camera.c
+        camera.h)
 
 target_link_libraries(proc_gen_game raylib)
 

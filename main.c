@@ -1,25 +1,5 @@
 #include <raylib.h>
-#include <raymath.h>
-
-const float SENSITIVITY = 0.003f;
-
-void UpdateCameraG(Camera *camera) {
-    Vector2 mouse = GetMouseDelta();
-
-    float yawAngle = -mouse.x * SENSITIVITY;
-    float pitchAngle = -mouse.y * SENSITIVITY;
-
-    Vector3 up = camera->up;
-
-    Vector3 targetPos = Vector3Subtract(camera->target, camera->position);
-
-    targetPos = Vector3RotateByAxisAngle(targetPos, up, yawAngle);
-
-    Vector3 right = Vector3CrossProduct(targetPos, up);
-
-    targetPos = Vector3RotateByAxisAngle(targetPos, right, pitchAngle);
-    camera -> target = Vector3Add(camera->position, targetPos);
-}
+#include "camera.h"
 
 int main(void) {
     InitWindow(1024, 1024, "Proc Gen Game");
@@ -35,7 +15,7 @@ int main(void) {
     camera.projection = CAMERA_PERSPECTIVE;
 
     while (!WindowShouldClose()) {
-        UpdateCameraG(&camera);
+        PUpdateCamera(&camera);
 
         BeginDrawing();
         ClearBackground(BLACK);
