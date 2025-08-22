@@ -5,6 +5,16 @@
 #include "camera.h"
 #include "movement.h"
 
+Model loadCubeModel(Texture2D tex) {
+    Mesh mesh = GenMeshCube(1.0f, 1.0f, 1.0f);
+    UploadMesh(&mesh, false);
+
+    Model model = LoadModelFromMesh(mesh);
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = tex;
+
+    return model;
+}
+
 int main(void) {
     InitWindow(1024, 1024, "Proc Gen Game");
 
@@ -19,17 +29,10 @@ int main(void) {
     camera.projection = CAMERA_PERSPECTIVE;
 
     Texture2D grassTex = LoadTexture("../grass.png");
-    Mesh grassCubeMesh = GenMeshCube(1.0f, 1.0f, 1.0f);
-    UploadMesh(&grassCubeMesh, false);
-    Model grassModel = LoadModelFromMesh(grassCubeMesh);
+    Model grassModel = loadCubeModel(grassTex);
 
     Texture2D somethingTex = LoadTexture("../something.png");
-    Mesh somethingCubeMesh = GenMeshCube(1.0f, 1.0f, 1.0f);
-    UploadMesh(&somethingCubeMesh, false);
-    Model somethingModel = LoadModelFromMesh(somethingCubeMesh);
-
-    grassModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = grassTex;
-    somethingModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = somethingTex;
+    Model somethingModel = loadCubeModel(somethingTex);
 
     srand(time(NULL));
 
