@@ -36,17 +36,17 @@ int main(void) {
 
     srand(time(NULL));
 
-    int capacity = 20;
+    int capacity = 100;
     int *xArr = malloc(capacity * sizeof(int));
     int *zArr = malloc(capacity * sizeof(int));
 
     int count = 0;
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 100; i++) {
         if (rand() % 2 == 0) {
-            int x = rand() % 20;
+            int x = rand() % 100;
             xArr[count++] = x;
-            int z = rand() % 20;
+            int z = rand() % 100;
             zArr[count]= z;
         }
     }
@@ -62,8 +62,8 @@ int main(void) {
 
         BeginMode3D(camera);
 
-        for (int x = 0; x <= 20; x++) {
-            for (int z = 0; z <= 20; z++) {
+        for (int x = 0; x < 100; x++) {
+            for (int z = 0; z < 100; z++) {
                 DrawModel(grassModel, (Vector3){(float)x, 0.0f, (float)z}, 1.0f, WHITE);
             }
         }
