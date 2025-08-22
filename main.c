@@ -80,9 +80,6 @@ int main(void) {
     UnloadTexture(grassTex);
     UnloadTexture(somethingTex);
 
-    UnloadMesh(grassCubeMesh);
-    UnloadMesh(somethingCubeMesh);
-
     UnloadModel(grassModel);
     UnloadModel(somethingModel);
 
