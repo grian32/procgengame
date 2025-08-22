@@ -48,7 +48,7 @@ int main(void) {
         }
     }
 
-    SetTargetFPS(60);
+    SetTargetFPS(144);
 
     while (!WindowShouldClose()) {
         PUpdateCamera(&camera);
