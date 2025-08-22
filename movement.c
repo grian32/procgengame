@@ -54,19 +54,16 @@ void UpdateMovement(Camera *camera) {
     }
 
     if (IsKeyPressed(KEY_SPACE)) {
-        if (camera->position.y > 2.0f) {
-            return;
-        }
-
         Vector3 newPos = Vector3Add(camera->position, Vector3Add(camera->up, JUMP_VEC));
         camera->position = newPos;
 
         Vector3 newTarget = Vector3Add(camera->target, Vector3Add(camera->up, JUMP_VEC));
         camera->target = newTarget;
-    }
+    } else if (IsKeyPressed(KEY_LEFT_SHIFT)) {
+        Vector3 newPos = Vector3Subtract(camera->position, Vector3Add(camera->up, JUMP_VEC));
+        camera->position = newPos;
 
-    if (camera->position.y > 2.0f) {
-        camera->position.y -= FALL_AMOUNT;
-        camera->target.y -= FALL_AMOUNT;
+        Vector3 newTarget = Vector3Subtract(camera->target, Vector3Add(camera->up, JUMP_VEC));
+        camera->target = newTarget;
     }
 }
