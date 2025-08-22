@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "camera.h"
+#include "movement.h"
 
 int main(void) {
     InitWindow(1024, 1024, "Proc Gen Game");
@@ -16,6 +17,7 @@ int main(void) {
 
     while (!WindowShouldClose()) {
         PUpdateCamera(&camera);
+        UpdateMovement(&camera);
 
         BeginDrawing();
         ClearBackground(BLACK);

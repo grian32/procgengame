@@ -7,7 +7,9 @@ find_package(raylib REQUIRED)
 
 add_executable(proc_gen_game main.c
         camera.c
-        camera.h)
+        camera.h
+        movement.c
+        movement.h)
 
 target_link_libraries(proc_gen_game raylib)
 
