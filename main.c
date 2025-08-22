@@ -1,91 +1,43 @@
-#include <raylib.h>
-#include <stdlib.h>
-#include <time.h>
-
-#include "camera.h"
-#include "movement.h"
-
-Model loadCubeModel(Texture2D tex) {
-    Mesh mesh = GenMeshCube(1.0f, 1.0f, 1.0f);
-    UploadMesh(&mesh, false);
-
-    Model model = LoadModelFromMesh(mesh);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = tex;
-
-    return model;
-}
+#include <stdio.h>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
+#include "util.h"
 
 int main(void) {
-    InitWindow(1024, 1024, "Proc Gen Game");
-
-    DisableCursor();
-
-    Camera3D camera = { 0 };
-
-    camera.position = (Vector3){0.0f, 2.0f, 4.0f};
-    camera.target = (Vector3){0.0f, 2.0f, 0.0f};
-    camera.up = (Vector3){0.0f, 1.0f, 0.0f};
-    camera.fovy = 60.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
-
-    Texture2D grassTex = LoadTexture("../grass.png");
-    Model grassModel = loadCubeModel(grassTex);
-
-    Texture2D somethingTex = LoadTexture("../something.png");
-    Model somethingModel = loadCubeModel(somethingTex);
-
-    srand(time(NULL));
-
-    int capacity = 100;
-    int *xArr = malloc(capacity * sizeof(int));
-    int *zArr = malloc(capacity * sizeof(int));
-
-    int count = 0;
-
-    for (int i = 0; i < 100; i++) {
-        if (rand() % 2 == 0) {
-            int x = rand() % 100;
-            xArr[count++] = x;
-            int z = rand() % 100;
-            zArr[count]= z;
-        }
+    if (!glfwInit()) {
+        fprintf(stderr, "failed to initalize GLFW\n");
+        return -1;
     }
 
-    SetTargetFPS(144);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    while (!WindowShouldClose()) {
-        PUpdateCamera(&camera);
-        UpdateMovement(&camera);
+    GLFWwindow* window = glfwCreateWindow(1000, 1000, "Proc Gen Game", NULL, NULL);
 
-        BeginDrawing();
-        ClearBackground(BLACK);
-
-        BeginMode3D(camera);
-
-        for (int x = 0; x < 100; x++) {
-            for (int z = 0; z < 100; z++) {
-                DrawModel(grassModel, (Vector3){(float)x, 0.0f, (float)z}, 1.0f, WHITE);
-            }
-        }
-
-        for (int i = 0; i < count; i++) {
-            DrawModel(somethingModel, (Vector3){(float)xArr[i], 1.0f, (float)zArr[i]}, 1.0f, WHITE);
-        }
-
-        EndMode3D();
-
-        EndDrawing();
+    if (!window) {
+        fprintf(stderr, "faled to create glfw window\n");
+        glfwTerminate();
+        return -1;
     }
 
-    free(xArr);
-    free(zArr);
+    glfwMakeContextCurrent(window);
 
-    UnloadTexture(grassTex);
-    UnloadTexture(somethingTex);
+    if (!gladLoadGL()) {
+        fprintf(stderr, "failed to initialize glad\n");
+        return -1;
+    }
 
-    UnloadModel(grassModel);
-    UnloadModel(somethingModel);
+    while (!glfwWindowShouldClose(window)) {
+        glClearColorRgb(135, 206, 235);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    CloseWindow();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
     return 0;
 }

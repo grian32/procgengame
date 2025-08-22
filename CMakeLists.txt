@@ -3,16 +3,15 @@ project(proc_gen_game C)
 
 set(CMAKE_C_STANDARD 11)
 
-find_package(raylib REQUIRED)
+find_package(OpenGL REQUIRED)
 
-add_executable(proc_gen_game main.c
-        camera.c
-        camera.h
-        movement.c
-        movement.h)
+add_library(glad STATIC glad/src/glad.c)
+target_include_directories(glad PUBLIC glad/include)
 
-target_link_libraries(proc_gen_game raylib)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLFW REQUIRED glfw3)
 
-if (UNIX)
-    target_link_libraries(proc_gen_game m pthread dl)
-endif()
+add_executable(proc_gen_game main.c util.c util.h)
+target_include_directories(proc_gen_game PRIVATE glad/include ${GLFW_INCLUDE_DIRs})
+
+target_link_libraries(proc_gen_game OpenGL::GL glad ${GLFW_LIBRARIES})
