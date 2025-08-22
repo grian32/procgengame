@@ -6,8 +6,8 @@
 #include <raymath.h>
 #include <stdio.h>
 
-const float SPEED = 0.001f;
-const float FALL_AMOUNT = 0.001f;
+const float SPEED = 0.04f;
+const float FALL_AMOUNT = 0.04f;
 const Vector3 JUMP_VEC = (Vector3){0.0f, 1.0f, 0.0f};
 
 void UpdateMovement(Camera *camera) {

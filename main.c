@@ -15,6 +15,7 @@ int main(void) {
     camera.fovy = 60.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
+    SetTargetFPS(60);
     while (!WindowShouldClose()) {
         PUpdateCamera(&camera);
         UpdateMovement(&camera);
