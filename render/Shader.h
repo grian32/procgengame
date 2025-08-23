@@ -6,7 +6,6 @@
 #define PROC_GEN_GAME_SHADER_H
 #include <string>
 
-
 class Shader {
 public:
     unsigned int ID;

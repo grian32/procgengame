@@ -7,7 +7,7 @@
 #include <iostream>
 #include <ostream>
 
-#include "util.h"
+#include "../util.h"
 
 Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath) {
     std::string vertexCode = readFile(vertexPath);

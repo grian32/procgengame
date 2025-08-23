@@ -5,7 +5,7 @@
 #include <cstdio>
 
 #include "input.h"
-#include "Shader.h"
+#include "render/Shader.h"
 #include "util.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
