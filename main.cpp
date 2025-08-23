@@ -5,13 +5,14 @@
 #include <cstdio>
 
 #include "input.h"
+#include "Shader.h"
 #include "util.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-int main(void) {
+int main() {
     if (!glfwInit()) {
         fprintf(stderr, "failed to initalize GLFW\n");
         return -1;
@@ -55,10 +56,7 @@ int main(void) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    unsigned int vertexShader = loadShader("../shaders/v.glsl", GL_VERTEX_SHADER);
-    unsigned int fragmentShader = loadShader("../shaders/f.glsl", GL_FRAGMENT_SHADER);
-
-    unsigned int shaderProgram = loadProgram(vertexShader, fragmentShader);
+    Shader shaderProgram("../shaders/v.glsl", "../shaders/f.glsl");
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -71,7 +69,7 @@ int main(void) {
         glClearColorRgb(135, 206, 235);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shaderProgram);
+        glUseProgram(shaderProgram.ID);
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);

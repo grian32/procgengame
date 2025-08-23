@@ -51,27 +51,3 @@ std::string readFile(const std::string& filename) {
 
     return buffer.str();
 }
-
-unsigned int loadShader(const std::string& vertexShaderPath, GLenum type) {
-    std::string shaderSource = readFile(vertexShaderPath);
-    if (shaderSource.empty()) return 0;
-
-    unsigned int shader = glCreateShader(type);
-    const char* srcPtr = shaderSource.c_str();
-    glShaderSource(shader, 1, &srcPtr, nullptr);
-    glCompileShader(shader);
-    glCheckAndPrintShaderErrors(shader);
-
-    return shader;
-}
-
-// takes in both vertex & fragment shaders and returns the compiled shader program
-unsigned int loadProgram(unsigned int vertexShader, unsigned int fragmentShader) {
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glCheckAndPrintProgramErrors(shaderProgram);
-
-    return shaderProgram;
-}
