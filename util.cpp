@@ -4,13 +4,17 @@
 #include "util.h"
 
 #include <glad/glad.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 #include <GL/gl.h>
 
 
 void glClearColorRgb(int red, int green, int blue) {
-    glClearColor((float)red/255, (float)green/255, (float)blue/255, 1.0f);
+    glClearColor(static_cast<float>(red)/255, static_cast<float>(green)/255, static_cast<float>(blue)/255, 1.0f);
 }
 
 void glCheckAndPrintShaderErrors(unsigned int shader) {
@@ -35,40 +39,28 @@ void glCheckAndPrintProgramErrors(unsigned int program) {
     }
 }
 
-const char *readFile(const char *filename) {
-    FILE *f = fopen(filename, "rb");
-    if (!f) {
-        perror("fopen");
-        return NULL;
+std::string readFile(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    if (!file) {
+        std::cerr << "failed to open file: " << filename << std::endl;
+        return {};
     }
 
-    fseek(f, 0, SEEK_END);
-    long size = ftell(f);
-    rewind(f);
+    std::ostringstream buffer;
+    buffer << file.rdbuf();
 
-    char *buffer = malloc(size + 1);
-    if (!buffer) {
-        perror("malloc");
-        fclose(f);
-        return NULL;
-    }
-
-    size_t read = fread(buffer, 1, size, f);
-    buffer[read] = '\0';
-
-    fclose(f);
-    return buffer;
+    return buffer.str();
 }
 
-unsigned int loadShader(const char *vertexShaderPath, GLenum type) {
-    const char *shaderSource = readFile(vertexShaderPath);
-    if (!shaderSource) return 0;
+unsigned int loadShader(const std::string& vertexShaderPath, GLenum type) {
+    std::string shaderSource = readFile(vertexShaderPath);
+    if (shaderSource.empty()) return 0;
 
     unsigned int shader = glCreateShader(type);
-    glShaderSource(shader, 1, &shaderSource, NULL);
+    const char* srcPtr = shaderSource.c_str();
+    glShaderSource(shader, 1, &srcPtr, nullptr);
     glCompileShader(shader);
     glCheckAndPrintShaderErrors(shader);
-    free((char *)shaderSource);
 
     return shader;
 }

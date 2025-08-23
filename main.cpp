@@ -1,9 +1,8 @@
-#include <math.h>
+#include <cmath>
 #include <glad/glad.h>
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
 
 #include "input.h"
 #include "util.h"
@@ -23,7 +22,7 @@ int main(void) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow *window =
-        glfwCreateWindow(1000, 1000, "Proc Gen Game", NULL, NULL);
+        glfwCreateWindow(1000, 1000, "Proc Gen Game", nullptr, nullptr);
 
     if (!window) {
         fprintf(stderr, "faled to create glfw window\n");
@@ -42,10 +41,10 @@ int main(void) {
 
     float vertices[] = {
         // pos              // col
-         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
-         0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,// top right
-    };
+        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom right
+       -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
+        0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,// top right
+   };
 
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
@@ -83,7 +82,6 @@ int main(void) {
 
     glfwDestroyWindow(window);
     glfwTerminate();
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+
     return 0;
 }
