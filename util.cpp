@@ -23,7 +23,7 @@ void glCheckAndPrintShaderErrors(unsigned int shader) {
 
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(shader, 512, NULL, infoLog);
+        glGetShaderInfoLog(shader, 512, nullptr, infoLog);
         printf("ERROR::SHADER::COMPILATION_FAILED\n%s\n", infoLog);
     }
 }
@@ -34,7 +34,7 @@ void glCheckAndPrintProgramErrors(unsigned int program) {
 
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(program, 512, NULL, infoLog);
+        glGetProgramInfoLog(program, 512, nullptr, infoLog);
         printf("ERROR::SHADER::PROGRAM_LINK_FAILED\n%s\n", infoLog);
     }
 }
