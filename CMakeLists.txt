@@ -15,4 +15,4 @@ pkg_check_modules(GLFW REQUIRED glfw3)
 add_executable(proc_gen_game main.c util.c util.h input.c input.h)
 target_include_directories(proc_gen_game PRIVATE glad/include ${GLFW_INCLUDE_DIRs})
 
-target_link_libraries(proc_gen_game OpenGL::GL glad ${GLFW_LIBRARIES})
+target_link_libraries(proc_gen_game OpenGL::GL glad ${GLFW_LIBRARIES} m)
