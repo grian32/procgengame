@@ -1,6 +1,8 @@
 //
 // Created by grian on 8/22/25.
 //
+#include "util.h"
+
 #include <glad/glad.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,6 +34,7 @@ void glCheckAndPrintProgramErrors(unsigned int program) {
         printf("ERROR::SHADER::PROGRAM_LINK_FAILED\n%s\n", infoLog);
     }
 }
+
 const char *readFile(const char *filename) {
     FILE *f = fopen(filename, "rb");
     if (!f) {
@@ -55,4 +58,28 @@ const char *readFile(const char *filename) {
 
     fclose(f);
     return buffer;
+}
+
+unsigned int loadShader(const char *vertexShaderPath, GLenum type) {
+    const char *shaderSource = readFile(vertexShaderPath);
+    if (!shaderSource) return 0;
+
+    unsigned int shader = glCreateShader(type);
+    glShaderSource(shader, 1, &shaderSource, NULL);
+    glCompileShader(shader);
+    glCheckAndPrintShaderErrors(shader);
+    free((char *)shaderSource);
+
+    return shader;
+}
+
+// takes in both vertex & fragment shaders and returns the compiled shader program
+unsigned int loadProgram(unsigned int vertexShader, unsigned int fragmentShader) {
+    unsigned int shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+    glCheckAndPrintProgramErrors(shaderProgram);
+
+    return shaderProgram;
 }

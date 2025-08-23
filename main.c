@@ -66,23 +66,10 @@ int main(void) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    const char *vertexShaderSource = readFile("../shaders/v.glsl");
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    glCheckAndPrintShaderErrors(vertexShader);
+    unsigned int vertexShader = loadShader("../shaders/v.glsl", GL_VERTEX_SHADER);
+    unsigned int fragmentShader = loadShader("../shaders/f.glsl", GL_FRAGMENT_SHADER);
 
-    const char *fragmentShaderSource = readFile("../shaders/f.glsl");
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glCheckAndPrintShaderErrors(fragmentShader);
-
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glCheckAndPrintProgramErrors(shaderProgram);
+    unsigned int shaderProgram = loadProgram(vertexShader, fragmentShader);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -104,8 +91,6 @@ int main(void) {
 
     glfwDestroyWindow(window);
     glfwTerminate();
-    free((char *)vertexShaderSource);
-    free((char *)fragmentShaderSource);
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     return 0;
