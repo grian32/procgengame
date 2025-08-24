@@ -4,8 +4,6 @@
 
 #include "Texture.h"
 
-#include <iostream>
-
 #include "stb_image.h"
 
 GLuint currUnit = 0;
@@ -28,7 +26,6 @@ Texture::Texture(const std::string &fileName) {
 
     int maxUnits;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxUnits);
-    std::cout << maxUnits << std::endl;
 
     ID = tex;
     Unit = currUnit;
