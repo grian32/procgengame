@@ -1,6 +1,7 @@
 cmake-build-debug
 .idea
 rgfw
-glad
+external/glad
+external/stb
 build
 .cache

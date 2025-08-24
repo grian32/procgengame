@@ -45,7 +45,13 @@ int main() {
         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom right
        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
         0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f,// top right
-   };
+    };
+
+    float texCoords[] = {
+        0.0f, 0.0f, // lower left
+        1.0f, 0.0f, // lower right
+        0.5f, 1.0f // top center
+    };
 
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
