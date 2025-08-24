@@ -93,9 +93,9 @@ int main() {
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1000.0f / 1000.0f, 0.1f, 100.0f);
 
     shaderProgram.use();
-    shaderProgram.setUniformMat4("model", model);
-    shaderProgram.setUniformMat4("view", view);
-    shaderProgram.setUniformMat4("projection", projection);
+    shaderProgram.setUniformMat4f("model", model);
+    shaderProgram.setUniformMat4f("view", view);
+    shaderProgram.setUniformMat4f("projection", projection);
 
     while (!glfwWindowShouldClose(window)) {
         processInput(window);

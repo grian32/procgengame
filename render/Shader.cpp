@@ -68,7 +68,7 @@ void Shader::use() const {
     glUseProgram(ID);
 }
 
-void Shader::setUniformMat4(const std::string& name, glm::mat4 trans) const {
+void Shader::setUniformMat4f(const std::string& name, glm::mat4 trans) const {
     GLint transformLoc = glGetUniformLocation(ID, name.c_str());
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 }

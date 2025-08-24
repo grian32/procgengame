@@ -16,7 +16,7 @@ public:
     ~Shader();
     void use() const;
 
-    void setUniformMat4(const ::std::string &name, glm::mat4 trans) const;
+    void setUniformMat4f(const ::std::string &name, glm::mat4 trans) const;
 };
 
 
