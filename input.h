@@ -6,6 +6,8 @@
 #define PROC_GEN_GAME_INPUT_H
 #include <GLFW/glfw3.h>
 
-void processInput(GLFWwindow *window);
+#include "render/Camera.h"
+
+void processInput(GLFWwindow *window, Camera& camera, float deltaTime);
 
 #endif //PROC_GEN_GAME_INPUT_H

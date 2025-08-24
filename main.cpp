@@ -12,6 +12,7 @@
 #include "render/Shader.h"
 #include "util.h"
 #include "stb_image.h"
+#include "render/Camera.h"
 #include "render/Texture.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
@@ -84,28 +85,50 @@ int main() {
 
     Texture tex("../grass.jpg");
 
+    // glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    // glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+    // glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+    //
+    // glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    // glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+    // glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1000.0f / 1000.0f, 0.1f, 100.0f);
+
+    // glm::mat4 view;
+    // glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+    //                            glm::vec3(0.0f, 0.0f, 0.0f),
+    //                               glm::vec3(0.0f, 1.0f, 0.0f));
+
+    Camera camera{};
 
     shaderProgram.use();
     shaderProgram.setUniformMat4f("model", model);
-    shaderProgram.setUniformMat4f("view", view);
     shaderProgram.setUniformMat4f("projection", projection);
 
+
+    float deltaTime = 0.0f;
+    float lastFrame = 0.0f;
+
+
+
     while (!glfwWindowShouldClose(window)) {
-        processInput(window);
+        float currFrame = glfwGetTime();
+        deltaTime = currFrame - lastFrame;
+        lastFrame = currFrame;
+
+        processInput(window, camera, deltaTime);
 
         glClearColorRgb(135, 206, 235);
         glClear(GL_COLOR_BUFFER_BIT);
 
         tex.bind();
-
         shaderProgram.use();
+
+        shaderProgram.setUniformMat4f("view", camera.getView());
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

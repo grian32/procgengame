@@ -17,7 +17,9 @@ add_executable(proc_gen_game main.cpp util.cpp util.h input.cpp input.h
         render/Shader.h
         external/stb/std_image_impl.cpp
         render/Texture.cpp
-        render/Texture.h)
+        render/Texture.h
+        render/Camera.cpp
+        render/Camera.h)
 target_include_directories(proc_gen_game PRIVATE external/glad/include ${GLFW_INCLUDE_DIRs} external/stb external/glm)
 
 target_link_libraries(proc_gen_game OpenGL::GL glad ${GLFW_LIBRARIES} m)
