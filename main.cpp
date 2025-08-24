@@ -4,7 +4,9 @@
 #include <GLFW/glfw3.h>
 #include <cstdio>
 #include <iostream>
-#include <ostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "input.h"
 #include "render/Shader.h"
@@ -82,6 +84,7 @@ int main() {
 
     Texture tex("../grass.jpg");
 
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
@@ -91,6 +94,11 @@ int main() {
         tex.bind();
 
         shaderProgram.use();
+
+        glm::mat4 trans = glm::mat4(1.0f);
+        trans = glm::rotate(trans, static_cast<float>(glfwGetTime()), glm::vec3(0.0, 0.0, 1.0));
+
+        shaderProgram.setUniformMat4("transform", trans);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
