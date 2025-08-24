@@ -15,7 +15,9 @@ pkg_check_modules(GLFW REQUIRED glfw3)
 add_executable(proc_gen_game main.cpp util.cpp util.h input.cpp input.h
         render/Shader.cpp
         render/Shader.h
-        external/stb/std_image_impl.cpp)
+        external/stb/std_image_impl.cpp
+        render/Texture.cpp
+        render/Texture.h)
 target_include_directories(proc_gen_game PRIVATE external/glad/include ${GLFW_INCLUDE_DIRs} external/stb)
 
 target_link_libraries(proc_gen_game OpenGL::GL glad ${GLFW_LIBRARIES} m)
