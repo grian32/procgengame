@@ -8,6 +8,13 @@
 
 #include "render/Camera.h"
 
-void processInput(GLFWwindow *window, Camera& camera, float deltaTime);
+struct MouseData {
+    Camera* cam;
+    float* lastX;
+    float* lastY;
+    bool* firstMouse;
+};
+
+void processInput(GLFWwindow *window, Camera& camera, float deltaTime, MouseData* data);
 
 #endif //PROC_GEN_GAME_INPUT_H

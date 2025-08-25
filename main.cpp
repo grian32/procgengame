@@ -46,6 +46,7 @@ int main() {
     }
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     float vertices[] = {
         // pos              // col
@@ -84,24 +85,10 @@ int main() {
     glEnableVertexAttribArray(2);
 
     Texture tex("../grass.jpg");
-
-    // glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-    // glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-    // glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-    //
-    // glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    // glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-    // glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1000.0f / 1000.0f, 0.1f, 100.0f);
-
-    // glm::mat4 view;
-    // glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
-    //                            glm::vec3(0.0f, 0.0f, 0.0f),
-    //                               glm::vec3(0.0f, 1.0f, 0.0f));
 
     Camera camera{};
 
@@ -112,15 +99,18 @@ int main() {
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
+    float lastX = 500;
+    float lastY = 500;
+    bool firstMouse = true;
 
-
+    auto* data = new MouseData{ &camera, &lastX, &lastY, &firstMouse};
 
     while (!glfwWindowShouldClose(window)) {
         float currFrame = glfwGetTime();
         deltaTime = currFrame - lastFrame;
         lastFrame = currFrame;
 
-        processInput(window, camera, deltaTime);
+        processInput(window, camera, deltaTime, data);
 
         glClearColorRgb(135, 206, 235);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -137,6 +127,7 @@ int main() {
         glfwSwapBuffers(window);
     }
 
+    delete data;
     glfwDestroyWindow(window);
     glfwTerminate();
 

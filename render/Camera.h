@@ -12,19 +12,28 @@
 class Camera {
 public:
     glm::vec3 pos{};
-    // glm::vec3 Target;
-    // glm::vec3 Direction;
+    glm::vec3 direction{};
     glm::vec3 up{};
     glm::vec3 right{};
     glm::vec3 front{};
+
     Camera();
 
     glm::mat4 getView() const;
 
-    void moveForward(const float units);
-    void moveBackward(const float units);
-    void moveLeft(const float units);
-    void moveRight(const float units);
+    void moveForward(float units);
+    void moveBackward(float units);
+    void moveLeft(float units);
+    void moveRight(float units);
+
+    void changeYaw(float value);
+    void changePitch(float value);
+
+private:
+    void updateDirection();
+    float yaw;
+    float pitch;
+    glm::vec3 worldUp = { 0.0f, 1.0f, 0.0f };
 };
 
 
