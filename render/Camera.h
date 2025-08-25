@@ -15,10 +15,16 @@ public:
     // glm::vec3 Target;
     // glm::vec3 Direction;
     glm::vec3 up{};
-    // glm::vec3 Right;
+    glm::vec3 right{};
     glm::vec3 front{};
     Camera();
+
     glm::mat4 getView() const;
+
+    void moveForward(const float units);
+    void moveBackward(const float units);
+    void moveLeft(const float units);
+    void moveRight(const float units);
 };
 
 
