@@ -36,6 +36,12 @@ void processInput(GLFWwindow *window, Camera& camera, float deltaTime, MouseData
     if (isKeyPressed(window, GLFW_KEY_D)) {
         camera.moveRight(cameraSpeed);
     }
+    if (isKeyPressed(window, GLFW_KEY_SPACE)) {
+        camera.moveUp(cameraSpeed);
+    }
+    if (isKeyPressed(window, GLFW_KEY_LEFT_SHIFT)) {
+        camera.moveDown(cameraSpeed);
+    }
 
     glfwSetWindowUserPointer(window, data);
     glfwSetCursorPosCallback(window, [](GLFWwindow* w, double xPos, double yPos) {

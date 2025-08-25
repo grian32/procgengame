@@ -33,6 +33,12 @@ void Camera::moveLeft(const float units) {
 void Camera::moveRight(const float units) {
     pos += right * units;
 }
+void Camera::moveDown(const float units) {
+    pos -= up * units;
+}
+void Camera::moveUp(const float units) {
+    pos += up * units;
+}
 
 void Camera::changeYaw(const float value) {
     yaw += value;

@@ -25,6 +25,8 @@ public:
     void moveBackward(float units);
     void moveLeft(float units);
     void moveRight(float units);
+    void moveUp(float units);
+    void moveDown(float units);
 
     void changeYaw(float value);
     void changePitch(float value);
